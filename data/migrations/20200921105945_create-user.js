@@ -1,12 +1,13 @@
 
 exports.up = function (knex) {
-    return knex.schema.createTable('users', tbl => {
-        tbl.increments('id')
-        tbl.string('username').notNull().unique()
-        tbl.string('email').notNull().unique()
-        tbl.string('password').notNull()
-        tbl.string('role').notNull()
-    })
+    return knex.schema
+        .createTable('users', tbl => {
+            tbl.increments('id')
+            tbl.string('username').notNull().unique()
+            tbl.string('email').notNull().unique()
+            tbl.string('password').notNull()
+            tbl.integer('role').notNull()
+        })
         .createTable('vendors', tbl => {
             tbl.increments()
             tbl.string('username').notNull().unique()
