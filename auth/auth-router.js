@@ -3,6 +3,7 @@ const router = require('express').Router()
 const bcrypt = require('bcryptjs')
 
 const { getAll, addUser, findUser } = require('./auth-model')
+const { generateToken, verifyToken } = require('./token')
 
 //dev only
 router.get('/users', (req, res) => {
@@ -35,7 +36,10 @@ router.get('/login', (req, res) => {
     findUser(username)
         .then(user => {
             if (user && bcrypt.compareSync(req.body.password, user.password)) {
-                res.status(201).json({ data: user })
+
+                const token = generateToken(user)
+
+                res.status(201).json({ data: user, token })
             } else {
                 res.status(404).json({ message: 'invalid credentials' })
             }
