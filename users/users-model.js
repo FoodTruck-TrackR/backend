@@ -10,7 +10,7 @@ async function getUserInfo(id) {
     const res = await db('users_trucks as ut')
         .leftJoin('users as u', 'u.id', 'ut.user_id')
         .leftJoin('trucks as t', 't.id', 'ut.truck_id')
-        .select('u.username', 'u.email', 't.name', 't.id as truck_id', 'ut.id as favorite_id')
+        .select('u.username', 'u.email', 't.name', 't.id as truck_id', 't.location as location', 'ut.id as favorite_id')
         .where('u.id', id)
 
     console.log(res)
@@ -23,7 +23,8 @@ async function getUserInfo(id) {
                 return {
                     name: item.name,
                     favorite_id: item['favorite_id'],
-                    truck_id: item['truck_id']
+                    truck_id: item['truck_id'],
+                    location: item.location
                 }
             })
         }
