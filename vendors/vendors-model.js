@@ -3,7 +3,8 @@ const db = require('../data/db-config')
 module.exports = {
     getVendorInfo,
     addOwnedTruck,
-    deleteTruck
+    deleteTruck,
+    addFoodItem
 }
 
 //view vendors info
@@ -39,4 +40,9 @@ function deleteTruck(id) {
     return db('trucks')
         .where({ id })
         .del()
+}
+
+function addFoodItem(item) {
+    return db('items')
+        .insert(item)
 }

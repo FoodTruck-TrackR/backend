@@ -4,7 +4,7 @@ const router = express.Router()
 const bcrypt = require('bcryptjs')
 const verifyToken = require('../auth/authenticate-middleware')
 
-const { getVendorInfo, addOwnedTruck, deleteTruck } = require('./vendors-model')
+const { getVendorInfo, addOwnedTruck, deleteTruck, addFoodItem } = require('./vendors-model')
 
 //view vendors info
 router.get('/:id', (req, res) => {
@@ -60,5 +60,22 @@ router.delete('/:id/:truckId', (req, res) => {
         })
 
 })
+
+
+router.post('/:id/:truckId', (req, res) => {
+    const newFoodItem = {
+        name: req.body.name,
+        description: req.body.description,
+        photo_url: req.body.photo_url,
+        price: req.body.price,
+        ratings: []
+    }
+    addFoodItem(newFoodItem)
+})
+
+
+
+
+
 
 module.exports = router

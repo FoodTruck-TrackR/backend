@@ -29,9 +29,8 @@ router.post('/:id', (req, res) => {
 
     //favorite truck id will be dynamic
     const favTruck = {
-        truck_id: 2,
+        truck_id: Number(req.body['truck_id']),
         user_id: id
-
     }
 
     addTruck(favTruck)
