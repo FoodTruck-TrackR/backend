@@ -57,7 +57,7 @@ router.get('/:id', (req, res) => {
             res.status(200).json({ data: user })
         })
         .catch(err => {
-            console.log(err)
+            res.status(500).json({ message: 'There was an error trying to retrieve from the database' })
         })
 })
 
