@@ -2,7 +2,7 @@ const router = require('express').Router()
 
 const bcrypt = require('bcryptjs')
 
-const { getAll, addUser, findUser } = require('./auth-model')
+const { getAll, addUser, findUser, getUserInfo } = require('./auth-model')
 const { generateToken } = require('./token')
 const verifyToken = require('./authenticate-middleware')
 
@@ -47,6 +47,17 @@ router.post('/login', (req, res) => {
         })
         .catch(error => {
             res.status(500).json({ message: 'invalid credentials' })
+        })
+})
+
+router.get('/:id', (req, res) => {
+    const id = Number(req.params.id)
+    getUserInfo(id)
+        .then(user => {
+            res.status(200).json({ data: user })
+        })
+        .catch(err => {
+            console.log(err)
         })
 })
 
