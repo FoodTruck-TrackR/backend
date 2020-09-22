@@ -4,7 +4,7 @@ const router = express.Router()
 const bcrypt = require('bcryptjs')
 const verifyToken = require('../auth/authenticate-middleware')
 
-const { getVendorInfo, addOwnedTruck, deleteTruck, addFoodItem } = require('./vendors-model')
+const { getVendorInfo, addOwnedTruck, deleteTruck, addFoodItem, deleteFoodItem } = require('./vendors-model')
 
 //view vendors info
 router.get('/:id', (req, res) => {
@@ -61,7 +61,7 @@ router.delete('/:id/:truckId', (req, res) => {
 
 })
 
-
+//add food item
 router.post('/:id/:truckId', (req, res) => {
     const newFoodItem = {
         name: req.body.name,
@@ -73,9 +73,24 @@ router.post('/:id/:truckId', (req, res) => {
     addFoodItem(newFoodItem)
 })
 
+//delete food item 
+router.delete('/:id/:truckId/:itemId', (req, res) => {
 
+    const foodItemId = Number(req.params.itemId)
 
+    deleteFoodItem(foodItemId)
+        .then(id => {
+            if (id) {
+                res.status(201).json({ message: 'successfully deleted food item' })
+            } else {
+                res.status(404).json({ message: 'no food item by that id exists' })
+            }
+        })
+        .catch(error => {
+            res.status(500).json({ message: error.message })
+        })
 
+})
 
 
 module.exports = router

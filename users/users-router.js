@@ -4,7 +4,7 @@ const router = express.Router()
 const bcrypt = require('bcryptjs')
 const verifyToken = require('../auth/authenticate-middleware')
 
-const { getUserInfo, addTruck, deleteTruck } = require('./users-model')
+const { getUserInfo, addTruck, deleteTruck, rateFoodItem } = require('./users-model')
 
 
 
@@ -60,7 +60,23 @@ router.delete('/:id/:favorite_id', (req, res) => {
         })
 })
 
+//rate a food item 
+//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+router.post('/:userId/:itemId', (req, res) => {
+    const newRating = {
+        user_id: Number(req.params.userId),
+        item_id: Number(req.params.itemId),
+        ratings: Number(req.body.rating)
+    }
 
+    rateFoodItem(newRating)
+        .then(id => {
+            res.status(201).json({ message: 'rating was added' })
+        })
+        .catch(error => {
+            res.status(500).json({ message: error.message })
+        })
+})
 
 
 

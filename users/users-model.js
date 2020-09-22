@@ -3,7 +3,8 @@ const db = require('../data/db-config')
 module.exports = {
     getUserInfo,
     addTruck,
-    deleteTruck
+    deleteTruck,
+    rateFoodItem
 }
 
 async function getUserInfo(id) {
@@ -43,4 +44,10 @@ function deleteTruck(id) {
     return db('users_trucks')
         .where({ id })
         .del()
+}
+
+function rateFoodItem(body) {
+    return db('users_items')
+        .insert(body)
+
 }

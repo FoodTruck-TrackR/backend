@@ -4,7 +4,8 @@ module.exports = {
     getVendorInfo,
     addOwnedTruck,
     deleteTruck,
-    addFoodItem
+    addFoodItem,
+    deleteFoodItem
 }
 
 //view vendors info
@@ -45,4 +46,10 @@ function deleteTruck(id) {
 function addFoodItem(item) {
     return db('items')
         .insert(item)
+}
+
+function deleteFoodItem(id) {
+    return db('items')
+        .where('items.id', id)
+        .del()
 }
