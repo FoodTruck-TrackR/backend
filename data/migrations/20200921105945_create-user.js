@@ -42,11 +42,17 @@ exports.up = function (knex) {
             tbl.integer('user_id').unsigned().notNull().references('id').inTable('users').onUpdate('CASCADE').onDelete('CASCADE')
             tbl.integer('truck_id').unsigned().notNull().references('id').inTable('users').onUpdate('CASCADE').onDelete('CASCADE')
         })
+    // .createTable('vendors_trucks', tbl => {
+    //     tbl.increments()
+    //     tbl.integer('vendor_id').unsigned().notNull().references('id').inTable('vendors').onUpdate('CASCADE').onDelete('CASCADE')
+    //     tbl.integer('truck_id').unsigned().notNull().references('id').inTable('trucks').onUpdate('CASCADE').onDelete('CASCADE')
+    // })
 };
 
 exports.down = function (knex) {
 
     return knex.schema
+        .dropTableIfExists('vendors_trucks')
         .dropTableIfExists('users_trucks')
         .dropTableIfExists('users_items')
         .dropTableIfExists('items')

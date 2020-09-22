@@ -2,13 +2,23 @@ const router = require('express').Router()
 
 const bcrypt = require('bcryptjs')
 
-const { getAll, addUser, findUser, getUserInfo } = require('./auth-model')
+const { getAllUsers, getAllVendors, addUser, addVendor, findUser, getUserInfo, getVendorInfo } = require('./auth-model')
 const { generateToken } = require('./token')
 const verifyToken = require('./authenticate-middleware')
 
 //dev only
 router.get('/users', verifyToken(), (req, res) => {
-    getAll()
+    getAllUsers()
+        .then(users => {
+            res.status(200).json({ message: users })
+        })
+        .catch(err => {
+            res.status(500).json({ message: err.message })
+        })
+})
+
+router.get('/vendors', verifyToken(), (req, res) => {
+    getAllVendors()
         .then(users => {
             res.status(200).json({ message: users })
         })
@@ -21,13 +31,26 @@ router.post('/register', (req, res) => {
 
     req.body.password = bcrypt.hashSync(req.body.password, 5)
 
-    addUser(req.body)
-        .then(([id]) => {
-            res.status(201).json({ message: 'User has been successfully registered' })
-        })
-        .catch(error => {
-            res.status(500).json({ message: 'username or email alerady exists' })
-        })
+    if (req.body.role === "diner") {
+        addUser(req.body)
+            .then(([id]) => {
+                res.status(201).json({ message: 'User has been successfully registered' })
+            })
+            .catch(error => {
+                res.status(500).json({ message: 'username or email alerady exists' })
+            })
+    } else if (req.body.role === "vendor") {
+        addVendor(req.body)
+            .then(([id]) => {
+                res.status(201).json({ message: 'User has been successfully registered' })
+            })
+            .catch(error => {
+                res.status(500).json({ message: 'username or email alerady exists' })
+            })
+    } else {
+        res.status(401).json({ message: 'must include role of either vendor or diner' })
+    }
+
 })
 
 router.post('/login', (req, res) => {
@@ -50,15 +73,28 @@ router.post('/login', (req, res) => {
         })
 })
 
-router.get('/:id', (req, res) => {
+//route could be moved out of auth-directory
+router.get('/:role/:id', verifyToken(), (req, res) => {
+
     const id = Number(req.params.id)
-    getUserInfo(id)
-        .then(user => {
-            res.status(200).json({ data: user })
-        })
-        .catch(err => {
-            res.status(500).json({ message: 'There was an error trying to retrieve from the database' })
-        })
+
+    if (req.params.role === "diner") {
+        getUserInfo(id)
+            .then(user => {
+                res.status(200).json({ data: user })
+            })
+            .catch(err => {
+                res.status(500).json({ message: 'There was an error trying to retrieve from the database' })
+            })
+    } else {
+        getVendorInfo(id)
+            .then(vendor => {
+                res.status(200).json({ data: vendor })
+            })
+            .catch(err => {
+                res.status(500).json({ message: 'There was an error trying to retrieve from the database!' })
+            })
+    }
 })
 
 module.exports = router
