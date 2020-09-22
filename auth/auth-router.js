@@ -2,7 +2,8 @@ const router = require('express').Router()
 
 const bcrypt = require('bcryptjs')
 
-const { getAllUsers, getAllVendors, addUser, addVendor, findUser, getUserInfo, getVendorInfo } = require('./auth-model')
+const { getAllUsers, getAllVendors, addUser, addVendor, findUser, getVendorInfo } = require('./auth-model')
+
 const { generateToken } = require('./token')
 const verifyToken = require('./authenticate-middleware')
 
@@ -74,27 +75,27 @@ router.post('/login', (req, res) => {
 })
 
 //route could be moved out of auth-directory
-router.get('/:role/:id', verifyToken(), (req, res) => {
+// router.get('/:role/:id', verifyToken(), (req, res) => {
 
-    const id = Number(req.params.id)
+//     const id = Number(req.params.id)
 
-    if (req.params.role === "diner") {
-        getUserInfo(id)
-            .then(user => {
-                res.status(200).json({ data: user })
-            })
-            .catch(err => {
-                res.status(500).json({ message: 'There was an error trying to retrieve from the database' })
-            })
-    } else {
-        getVendorInfo(id)
-            .then(vendor => {
-                res.status(200).json({ data: vendor })
-            })
-            .catch(err => {
-                res.status(500).json({ message: 'There was an error trying to retrieve from the database!' })
-            })
-    }
-})
+//     if (req.params.role === "diner") {
+//         getUserInfo(id)
+//             .then(user => {
+//                 res.status(200).json({ data: user })
+//             })
+//             .catch(err => {
+//                 res.status(500).json({ message: 'There was an error trying to retrieve from the database' })
+//             })
+//     } else {
+//         getVendorInfo(id)
+//             .then(vendor => {
+//                 res.status(200).json({ data: vendor })
+//             })
+//             .catch(err => {
+//                 res.status(500).json({ message: 'There was an error trying to retrieve from the database!' })
+//             })
+//     }
+// })
 
 module.exports = router

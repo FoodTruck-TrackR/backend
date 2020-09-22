@@ -40,7 +40,7 @@ exports.up = function (knex) {
         .createTable('users_trucks', tbl => {
             tbl.increments()
             tbl.integer('user_id').unsigned().notNull().references('id').inTable('users').onUpdate('CASCADE').onDelete('CASCADE')
-            tbl.integer('truck_id').unsigned().notNull().references('id').inTable('users').onUpdate('CASCADE').onDelete('CASCADE')
+            tbl.integer('truck_id').unsigned().notNull().references('id').inTable('trucks').onUpdate('CASCADE').onDelete('CASCADE')
         })
     // .createTable('vendors_trucks', tbl => {
     //     tbl.increments()
