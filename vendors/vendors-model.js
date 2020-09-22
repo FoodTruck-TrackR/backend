@@ -1,9 +1,12 @@
 const db = require('../data/db-config')
 
 module.exports = {
-    getVendorInfo
+    getVendorInfo,
+    addOwnedTruck,
+    deleteTruck
 }
 
+//view vendors info
 async function getVendorInfo(id) {
     const res = await db('vendors as v')
         .join('trucks as t', 't.vendor_id', 'v.id')
@@ -24,4 +27,16 @@ async function getVendorInfo(id) {
         }
     }
     return res
+}
+
+//add truck to list
+function addOwnedTruck(truck) {
+    return db('trucks')
+        .insert(truck)
+}
+
+function deleteTruck(id) {
+    return db('trucks')
+        .where({ id })
+        .del()
 }
