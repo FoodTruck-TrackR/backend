@@ -68,7 +68,8 @@ router.post('/:id/:truckId', (req, res) => {
         description: req.body.description,
         photo_url: req.body.photo_url,
         price: req.body.price,
-        ratings: []
+        average_rating: 0,
+        truck_id: Number(req.params.truckId)
     }
     addFoodItem(newFoodItem)
 })
