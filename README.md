@@ -21,7 +21,7 @@ Endpoints that do _**not**_ require authentication (Not Protected):
 
 
 # Diner Endpoints
-_All endpoints on chart below require a property called 'authorization' with the token as its value in the request headers
+_All endpoints on chart below require a property called 'authorization' with the token as its value in the request headers_
 | Requests        | Endpoints          | Description
 |-----------------|--------------------|--------------------|
 |<a href="#getTutorials">GET diner's favorited trucks</a>  | /api/users/:id| <b>GET</b> request to retrieve all user's favorited trucks
@@ -31,7 +31,7 @@ _All endpoints on chart below require a property called 'authorization' with the
 
 
 # Vendor Endpoints
-_All endpoints on chart below require a property called 'authorization' with the token as its value in the request headers
+_All endpoints on chart below require a property called 'authorization' with the token as its value in the request headers_
 | Requests        | Endpoints          | Description
 |-----------------|--------------------|--------------------|
 |<a href="#getTutorials">GET vendor's info</a>  | /api/vendors/:id| <b>GET</b> request's the vendor's information
