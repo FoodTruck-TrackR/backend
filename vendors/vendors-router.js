@@ -4,6 +4,7 @@ const router = express.Router()
 const bcrypt = require('bcryptjs')
 const verifyToken = require('../auth/authenticate-middleware')
 const verifyUser = require('../auth/authorization-middleware')
+const { validateTruck, validateItem } = require('../validation/validation-middleware')
 
 const { getVendorInfo, addOwnedTruck, deleteTruck, addFoodItem, deleteFoodItem } = require('./vendors-model')
 
@@ -23,7 +24,7 @@ router.get('/:id', verifyToken(), verifyUser(), (req, res) => {
 
 
 //add truck to owned list
-router.post('/:id', verifyToken(), verifyUser(), (req, res) => {
+router.post('/:id', validateTruck(), verifyToken(), verifyUser(), (req, res) => {
 
     const vendor_id = Number(req.params.id)
 
@@ -63,7 +64,7 @@ router.delete('/:id/:truckId', verifyToken(), verifyUser(), (req, res) => {
 })
 
 //add food item
-router.post('/:id/:truckId', verifyToken(), verifyUser(), (req, res) => {
+router.post('/:id/:truckId', validateItem(), verifyToken(), verifyUser(), (req, res) => {
     const newFoodItem = {
         name: req.body.name,
         description: req.body.description,

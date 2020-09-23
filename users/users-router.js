@@ -4,6 +4,7 @@ const router = express.Router()
 const bcrypt = require('bcryptjs')
 const verifyToken = require('../auth/authenticate-middleware')
 const verifyUser = require('../auth/authorization-middleware')
+const { validateFav, validateRatings } = require('../validation/validation-middleware')
 
 const { getUserInfo, addTruck, deleteTruck, rateFoodItem } = require('./users-model')
 
@@ -24,7 +25,7 @@ router.get('/:id', verifyToken(), verifyUser(), (req, res) => {
 })
 
 //add new truck to list
-router.post('/:id', verifyToken(), verifyUser(), (req, res) => {
+router.post('/:id', validateFav(), verifyToken(), verifyUser(), (req, res) => {
 
     const id = Number(req.params.id)
 
@@ -63,7 +64,7 @@ router.delete('/:id/:favorite_id', verifyToken(), verifyUser(), (req, res) => {
 
 //rate a food item 
 //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-router.post('/:userId/:itemId', verifyToken(), verifyUser(), (req, res) => {
+router.post('/:userId/:itemId', validateRatings(), verifyToken(), verifyUser(), (req, res) => {
     const newRating = {
         user_id: Number(req.params.userId),
         item_id: Number(req.params.itemId),

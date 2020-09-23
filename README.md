@@ -109,7 +109,8 @@ _An example of how the body should appear:_
 ```js
 {
     "username": "Kevin",
-    "password": "kev321"
+    "password": "kev321",
+    "role": "diner"
 }
 ```
 
@@ -482,9 +483,7 @@ _The request body should include the following_
 	"name": "Torta",
 	"description": "fried tortilla shell beans and meat",
 	"photo_url": "url34333.com",
-	"price": 3.99,
-	"average_rating": 4.5,
-	"truck_id": 2
+	"price": 3.99
 }
 
 ```
