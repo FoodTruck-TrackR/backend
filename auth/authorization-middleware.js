@@ -1,5 +1,3 @@
-const verifyToken = require("./authenticate-middleware")
-
 function verifyUser(id) {
     return function (req, res, next) {
 
