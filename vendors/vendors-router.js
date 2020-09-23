@@ -72,6 +72,12 @@ router.post('/:id/:truckId', (req, res) => {
         truck_id: Number(req.params.truckId)
     }
     addFoodItem(newFoodItem)
+        .then(resp => {
+            res.status(201).json({ message: 'food item was successfully added to food truck' })
+        })
+        .catch(error => {
+            res.status(500).json({ message: 'There was a problem adding that item to the database', err: error.message })
+        })
 })
 
 //delete food item 
