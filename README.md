@@ -23,8 +23,8 @@ Endpoints that do _**not**_ require authentication (Not Protected):
 # Diner Endpoints
 | Requests        | Endpoints          | Description
 |-----------------|--------------------|--------------------|
-|<a href="#getTutorials">GET diner's favorited trucks</a>  | /api/users/:userId| <b>GET</b> request to retrieve all user's favorited trucks
-|<a href="#getTutorialById">POST a new truck to diner's favorites</a>  | /api/users/:userId | <b>POST</b> adds the truck to diner's list of favorite trucks
+|<a href="#getTutorials">GET diner's favorited trucks</a>  | /api/users/:id| <b>GET</b> request to retrieve all user's favorited trucks
+|<a href="#getTutorialById">POST a new truck to diner's favorites</a>  | /api/users/:id | <b>POST</b> adds the truck to diner's list of favorite trucks
 |<a href="#postTutorial">POST a rating to food item </a>  | /api/users/:userId/:itemId | <b>POST</b> adds a rating to the specified food item
 |<a href="#getdirectionsByTId">DELETE a food truck from favorites </a>  | /api/users/:userId/:favorite_id | <b>DELETE</b> Deletes the truck from their favorites
 
@@ -35,8 +35,8 @@ Endpoints that do _**not**_ require authentication (Not Protected):
 |<a href="#getTutorials">GET vendor's info</a>  | /api/vendors/:id| <b>GET</b> request's the vendor's information
 |<a href="#getTutorialById">POST a new truck to vendor's list of owned trucks</a>  | /api/vendors/:id | <b>POST</b> adds the truck to vendor's list of owned trucks
 |<a href="#getdirectionsByTId">DELETE a food truck from owned trucks </a>  | /api/vendors/:id/:truckId | <b>DELETE</b> Deletes the truck from their owned trucks
-|<a href="#postTutorial">POST a food item to a food truck </a>  | /api/venors/:id/:truckId | <b>POST</b> adds a new food item to the specified truck
-|<a href="#postTutorial">DELETE a food item from a food truck </a>  | /api/venors/:id/:truckId/itemId | <b>DELETE</b> delete a food item from the specified truck
+|<a href="#postTutorial">POST a food item to a food truck </a>  | /api/vendors/:id/:truckId | <b>POST</b> adds a new food item to the specified truck
+|<a href="#postTutorial">DELETE a food item from a food truck </a>  | /api/vendors/:id/:truckId/itemId | <b>DELETE</b> delete a food item from the specified truck
 
 
 <hr />
@@ -62,7 +62,7 @@ _An example of how the body should appear:_
 
 ```js
 {
-	"username": "Kevin",
+    "username": "Kevin",
     "password": "kev321",
     "email": "kev@email.com",
     "role": "diner"
@@ -115,7 +115,7 @@ _An example of how the body should appear:_
 
 ### What will be returned:
 
-_You will receive the user object an a JWT._
+_If login is succcessful, you will receive the following object:._
 
 ```js
 {
@@ -128,6 +128,16 @@ _You will receive the user object an a JWT._
   },
   "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWJqZWN0Ijo0LCJ1c2VybmFtZSI6IktldmluIiwiaWF0IjoxNjAwODgyOTk3LCJleHAiOjE2MDA5NjkzOTd9.N2JNwgkdGLxe6qdyt50KxmBzkipw15tfBUzdlU45AMw"
 }
+```
+
+_If login fails, you will receive the following object_
+
+```js
+
+{
+  "message": "invalid credentials"
+}
+
 ```
 
 <hr />
@@ -227,7 +237,7 @@ _No request body needed_
 
 ### What will be returned:
 
-_You will receive an object containing the relevant food items
+_You will receive an object containing the relevant food items_
 
 ```js
 {
@@ -260,7 +270,7 @@ _You will receive an object containing the relevant food items
 <div id="getdirectionsByTId"></div>
 <a href="#top">Return to the top</a>
 
-URL: https://bw-foodtruck-backend.herokuapp.com/api/users/:userId
+URL: https://bw-foodtruck-backend.herokuapp.com/api/users/:id
 
 ### Request body should include: 
 _No request body needed_
@@ -295,7 +305,7 @@ _You will receive an object containing the diner's relevant data_
 <div id="postTutorial"></div>
 <a href="#top">Return to the top</a>
 
-URL: https://bw-foodtruck-backend.herokuapp.com/api/users/:userId
+URL: https://bw-foodtruck-backend.herokuapp.com/api/users/:id
 
 ### Request body should include: 
 
@@ -347,6 +357,7 @@ _You will receive an message indicating the request was successful_
 ```
 
 <hr />
+
 ## [DELETE] DELETE a food truck from favorites
 
 <div id="putTutorial"></div>
