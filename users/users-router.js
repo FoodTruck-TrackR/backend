@@ -66,7 +66,7 @@ router.post('/:userId/:itemId', (req, res) => {
     const newRating = {
         user_id: Number(req.params.userId),
         item_id: Number(req.params.itemId),
-        ratings: Number(req.body.rating)
+        ratings: Number(req.body.ratings)
     }
 
     rateFoodItem(newRating)

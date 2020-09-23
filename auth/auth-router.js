@@ -17,7 +17,7 @@ router.get('/users', verifyToken(), (req, res) => {
             res.status(500).json({ message: err.message })
         })
 })
-
+//dev only
 router.get('/vendors', verifyToken(), (req, res) => {
     getAllVendors()
         .then(users => {
