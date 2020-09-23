@@ -8,7 +8,7 @@
 
 ## Table of Contents
 
-## User and Vendor registration and login
+## Login, Registratoin, and Unprotected Endpoints
 Endpoints that do _**not**_ require authentication (Not Protected):
 
 | Requests        | Endpoints          | Description
@@ -255,152 +255,260 @@ _You will receive an object containing the relevant food items
 ```
 <hr />
 
-## [GET] Get Directions by Tutorial ID
+## [GET] Get Diner's Favorited Trucks
 
 <div id="getdirectionsByTId"></div>
 <a href="#top">Return to the top</a>
 
-URL: https://how2s.herokuapp.com/api/tutorials/:id/directions
+URL: https://bw-foodtruck-backend.herokuapp.com/api/users/:userId
 
 ### Request body should include: 
-No request body needed
+_No request body needed_
 
 
 ### What will be returned:
 
-_You will receive an array of all directions for that tutorial by tutorial_id this is an example for seeded tutorial with id of 4
+_You will receive an object containing the diner's relevant data_
 
 ```js
-[
-  {
-    "step_number": 1,
-    "instructions": "stand near open shoes"
-  },
-  {
-    "step_number": 2,
-    "instructions": "jump into shoes"
+{
+  "data": {
+    "username": "foodJunkie",
+    "email": "test@mail.com",
+    "favoriteTrucks": [
+      {
+        "name": "Bobs Burgers",
+        "favorite_id": 1,
+        "truck_id": 1,
+        "location": "Orlando"
+      }
+    ]
   }
-]
+}
 ```
 
 
 <hr />
 
-## [POST] POST tutorial
+## [POST] POST a new truck to diner's favorites
 
 <div id="postTutorial"></div>
 <a href="#top">Return to the top</a>
 
-URL: https://how2s.herokuapp.com/api/tutorials
+URL: https://bw-foodtruck-backend.herokuapp.com/api/users/:userId
 
 ### Request body should include: 
 
 ```js
   {
-    "title": "change tutorial title id 16",
-    "summary": "superrrrr speceific sumary.",
-	"instructor_id": 5
+    "truck_id": 2
   }
 ```
 
 
 ### What will be returned:
 
-_You will receive an array of all directions for that tutorial by tutorial_id this is an example for seeded tutorial with id of 4
-
+_You will receive a message indicating the request was successful_
 ```js
 {
-  "id": 17,
-  "title": "title id 16",
-  "summary": "superrrrr speceific sumary.",
-  "likes": 0
+  "message": "you have successfully favorited this truck"
 }
 ```
 
 <hr />
 
 
-## [POST] POST tutorial directions
+## [POST] POST a rating to a food item
 
 <div id="postTutorialDirections"></div>
 <a href="#top">Return to the top</a>
 
-URL: https://how2s.herokuapp.com/api/tutorials/:id/directions
+URL: https://bw-foodtruck-backend.herokuapp.com/api/users/:userId/itemId
 
 ### Request body should include: 
 
 ```js
 
-  {
-    "step_number": 3,
-    "instructions": "google stufff then cry a little"
-  }
+{
+    "ratings": 5
+}
 
 ```
 
 
 ### What will be returned:
 
-_You will receive an object with the directions you just posted
+_You will receive an message indicating the request was successful_
 
 ```js
 {
-  "id": 21,
-  "step_number": 3,
-  "instructions": "google stufff then cry a little",
-  "tutorial_id": 1
+  "message": "rating was added"
 }
 ```
 
 <hr />
-## [PUT] PUT / Update Tutorial
+## [DELETE] DELETE a food truck from favorites
 
 <div id="putTutorial"></div>
 <a href="#top">Return to the top</a>
 
-URL: https://how2s.herokuapp.com/api/tutorials/:id
+URL: https://bw-foodtruck-backend.herokuapp.com/api/users/:userId/favorite_id
 
 ### Request body should include: 
 
-```js
-  {
-    "title": "change tutorial title id 16",
-    "summary": "superrrrr speceific sumary.",
-	"instructor_id": 5
-  }
-```
+_No request body is needed_
 
 
 ### What will be returned:
 
-_You will receive an array of all directions for that tutorial by tutorial_id this is an example for seeded tutorial with id of 4
+_You will receive a message indicating the request was successful_
 
 ```js
 {
-  "id": 17,
-  "title": "title id 16",
-  "summary": "superrrrr speceific sumary.",
-  "likes": 0
+  "message": "truck was deleted from your favorites"
 }
 ```
 
 <hr />
 
-## [DELETE] Remove Tutorial
+## [GET] GET a vendor's owned food trucks
 
 <div id="delTutorial"></div>
 <a href="#top">Return to the top</a>
 
-URL: https://how2s.herokuapp.com/api/tutorials/:id
+URL: https://bw-foodtruck-backend.herokuapp.com/api/vendors/:id
 
 ### Request body should include: 
 
-No request body neccessary
+_No request body is needed_
 
 ### What will be returned:
 
-_You will receive an array of all directions for that tutorial by tutorial_id this is an example for seeded tutorial with id of 4
+_You will receive an object containing all the vendor's food trucks_
 
 ```js
-"message: you just killed 1 tutorial mourn them you animal"
+{
+  "data": {
+    "username": "truckMaster",
+    "email": "test456@mail.com",
+    "ownedTrucks": [
+      {
+        "name": "Bobs Burgers",
+        "location": "Orlando",
+        "truck_id": 1
+      }
+    ]
+  }
+}
 ```
+<hr />
+
+## [POST] POST a new truck to vendor's list of owned trucks
+
+<div id="delTutorial"></div>
+<a href="#top">Return to the top</a>
+
+URL: https://bw-foodtruck-backend.herokuapp.com/api/vendors/:id
+
+### Request body should include: 
+
+_The request body should have the following_
+
+```js
+{
+	"name": "Burrito Queen",
+	"location": "Houston"
+}
+```
+
+### What will be returned:
+
+_You will receive an message indicating the request was successful_
+
+```js
+{
+  "message": "truck was added to owned list"
+}
+```
+<hr />
+
+## [DELETE] DELETE a food truck from owned trucks
+
+<div id="delTutorial"></div>
+<a href="#top">Return to the top</a>
+
+URL: https://bw-foodtruck-backend.herokuapp.com/api/vendors/:id/:truckId
+
+### Request body should include: 
+
+_No request body is needed_
+
+
+### What will be returned:
+
+_You will receive an message indicating the request was successful_
+
+```js
+{
+  "message": "truck was deleted from the db"
+}
+```
+<hr />
+
+## [POST] POST a food item to a food truck
+
+<div id="delTutorial"></div>
+<a href="#top">Return to the top</a>
+
+URL: https://bw-foodtruck-backend.herokuapp.com/api/vendors/:id/:truckId
+
+### Request body should include: 
+
+_The request body should include the following_
+
+```js
+{
+	"name": "Torta",
+	"description": "fried tortilla shell beans and meat",
+	"photo_url": "url34333.com",
+	"price": 3.99,
+	"average_rating": 4.5,
+	"truck_id": 2
+}
+
+```
+
+
+### What will be returned:
+
+_You will receive an message indicating the request was successful_
+
+```js
+{
+  "message": "food item was successfully added to food truck"
+}
+```
+<hr />
+
+## [DELETE] DELETE a food item from a food truck
+
+<div id="delTutorial"></div>
+<a href="#top">Return to the top</a>
+
+URL: https://bw-foodtruck-backend.herokuapp.com/api/vendors/:id/:truckId/:itemId
+
+### Request body should include: 
+
+_No request body is needed_
+
+
+### What will be returned:
+
+_You will receive an message indicating the request was successful_
+
+```js
+{
+  "message": "successfully deleted food item"
+}
+```
+<hr />
