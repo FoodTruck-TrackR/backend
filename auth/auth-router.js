@@ -6,6 +6,7 @@ const { getAllUsers, getAllVendors, addUser, addVendor, findUser, findVendor, ge
 
 const { generateToken } = require('./token')
 const verifyToken = require('./authenticate-middleware')
+const { validateRegister, validateLogin } = require('../validation/validation-middleware')
 
 //dev only
 router.get('/users', verifyToken(), (req, res) => {
@@ -28,7 +29,7 @@ router.get('/vendors', verifyToken(), (req, res) => {
         })
 })
 
-router.post('/register', (req, res) => {
+router.post('/register', validateRegister(), (req, res) => {
 
     req.body.password = bcrypt.hashSync(req.body.password, 5)
 
@@ -54,7 +55,7 @@ router.post('/register', (req, res) => {
 
 })
 
-router.post('/login', (req, res) => {
+router.post('/login', validateLogin(), (req, res) => {
 
     const username = req.body.username
 
@@ -90,29 +91,5 @@ router.post('/login', (req, res) => {
             })
     }
 })
-
-//route could be moved out of auth-directory
-// router.get('/:role/:id', verifyToken(), (req, res) => {
-
-//     const id = Number(req.params.id)
-
-//     if (req.params.role === "diner") {
-//         getUserInfo(id)
-//             .then(user => {
-//                 res.status(200).json({ data: user })
-//             })
-//             .catch(err => {
-//                 res.status(500).json({ message: 'There was an error trying to retrieve from the database' })
-//             })
-//     } else {
-//         getVendorInfo(id)
-//             .then(vendor => {
-//                 res.status(200).json({ data: vendor })
-//             })
-//             .catch(err => {
-//                 res.status(500).json({ message: 'There was an error trying to retrieve from the database!' })
-//             })
-//     }
-// })
 
 module.exports = router
