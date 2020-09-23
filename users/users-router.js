@@ -3,13 +3,14 @@ const router = express.Router()
 
 const bcrypt = require('bcryptjs')
 const verifyToken = require('../auth/authenticate-middleware')
+const verifyUser = require('../auth/authorization-middleware')
 
 const { getUserInfo, addTruck, deleteTruck, rateFoodItem } = require('./users-model')
 
 
 
 //view the diner's favorite trucks
-router.get('/:id', verifyToken(), (req, res) => {
+router.get('/:id', verifyToken(), verifyUser(), (req, res) => {
 
     const id = Number(req.params.id)
 
@@ -23,7 +24,7 @@ router.get('/:id', verifyToken(), (req, res) => {
 })
 
 //add new truck to list
-router.post('/:id', (req, res) => {
+router.post('/:id', verifyToken(), verifyUser(), (req, res) => {
 
     const id = Number(req.params.id)
 
@@ -43,7 +44,7 @@ router.post('/:id', (req, res) => {
 })
 
 //delete favorite truck from list
-router.delete('/:id/:favorite_id', (req, res) => {
+router.delete('/:id/:favorite_id', verifyToken(), verifyUser(), (req, res) => {
 
     const favorite_id = Number(req.params.favorite_id)
 
@@ -62,7 +63,7 @@ router.delete('/:id/:favorite_id', (req, res) => {
 
 //rate a food item 
 //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-router.post('/:userId/:itemId', (req, res) => {
+router.post('/:userId/:itemId', verifyToken(), verifyUser(), (req, res) => {
     const newRating = {
         user_id: Number(req.params.userId),
         item_id: Number(req.params.itemId),

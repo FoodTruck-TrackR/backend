@@ -14,8 +14,6 @@ async function getUserInfo(id) {
         .select('u.username', 'u.email', 't.name', 't.id as truck_id', 't.location as location', 'ut.id as favorite_id')
         .where('u.id', id)
 
-    console.log(res)
-
     if (res.length > 0) {
         return {
             username: res[0].username,
