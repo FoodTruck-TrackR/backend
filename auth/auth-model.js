@@ -6,6 +6,7 @@ module.exports = {
     addUser,
     addVendor,
     findUser,
+    findVendor,
     getVendorInfo
 }
 
@@ -48,6 +49,12 @@ async function getVendorInfo(id) {
 function findUser(username) {
     return db('users')
         .where('users.username', username)
+        .first()
+}
+
+function findVendor(username) {
+    return db('vendors')
+        .where('vendors.username', username)
         .first()
 }
 

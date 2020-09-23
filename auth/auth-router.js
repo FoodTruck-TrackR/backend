@@ -2,7 +2,7 @@ const router = require('express').Router()
 
 const bcrypt = require('bcryptjs')
 
-const { getAllUsers, getAllVendors, addUser, addVendor, findUser, getVendorInfo } = require('./auth-model')
+const { getAllUsers, getAllVendors, addUser, addVendor, findUser, findVendor, getVendorInfo } = require('./auth-model')
 
 const { generateToken } = require('./token')
 const verifyToken = require('./authenticate-middleware')
@@ -58,20 +58,37 @@ router.post('/login', (req, res) => {
 
     const username = req.body.username
 
-    findUser(username)
-        .then(user => {
-            if (user && bcrypt.compareSync(req.body.password, user.password)) {
+    if (req.body.role === "diner") {
+        findUser(username)
+            .then(user => {
+                if (user && bcrypt.compareSync(req.body.password, user.password)) {
 
-                const token = generateToken(user)
+                    const token = generateToken(user)
 
-                res.status(201).json({ data: user, token })
-            } else {
-                res.status(404).json({ message: 'invalid credentials' })
-            }
-        })
-        .catch(error => {
-            res.status(500).json({ message: 'invalid credentials' })
-        })
+                    res.status(201).json({ data: user, token })
+                } else {
+                    res.status(404).json({ message: 'invalid credentials' })
+                }
+            })
+            .catch(error => {
+                res.status(500).json({ message: 'invalid credentials' })
+            })
+    } else {
+        findVendor(username)
+            .then(user => {
+                if (user && bcrypt.compareSync(req.body.password, user.password)) {
+
+                    const token = generateToken(user)
+
+                    res.status(201).json({ data: user, token })
+                } else {
+                    res.status(404).json({ message: 'invalid credentials' })
+                }
+            })
+            .catch(error => {
+                res.status(500).json({ message: 'invalid credentials' })
+            })
+    }
 })
 
 //route could be moved out of auth-directory

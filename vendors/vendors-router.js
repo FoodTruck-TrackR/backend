@@ -3,11 +3,12 @@ const router = express.Router()
 
 const bcrypt = require('bcryptjs')
 const verifyToken = require('../auth/authenticate-middleware')
+const verifyUser = require('../auth/authorization-middleware')
 
 const { getVendorInfo, addOwnedTruck, deleteTruck, addFoodItem, deleteFoodItem } = require('./vendors-model')
 
 //view vendors info
-router.get('/:id', (req, res) => {
+router.get('/:id', verifyToken(), verifyUser(), (req, res) => {
 
     const id = Number(req.params.id)
 
@@ -22,7 +23,7 @@ router.get('/:id', (req, res) => {
 
 
 //add truck to owned list
-router.post('/:id', (req, res) => {
+router.post('/:id', verifyToken(), verifyUser(), (req, res) => {
 
     const vendor_id = Number(req.params.id)
 
@@ -43,7 +44,7 @@ router.post('/:id', (req, res) => {
 
 
 //delete truck from owned list
-router.delete('/:id/:truckId', (req, res) => {
+router.delete('/:id/:truckId', verifyToken(), verifyUser(), (req, res) => {
 
     const truck_id = Number(req.params.truckId)
 
@@ -62,7 +63,7 @@ router.delete('/:id/:truckId', (req, res) => {
 })
 
 //add food item
-router.post('/:id/:truckId', (req, res) => {
+router.post('/:id/:truckId', verifyToken(), verifyUser(), (req, res) => {
     const newFoodItem = {
         name: req.body.name,
         description: req.body.description,
@@ -81,7 +82,7 @@ router.post('/:id/:truckId', (req, res) => {
 })
 
 //delete food item 
-router.delete('/:id/:truckId/:itemId', (req, res) => {
+router.delete('/:id/:truckId/:itemId', verifyToken(), verifyUser(), (req, res) => {
 
     const foodItemId = Number(req.params.itemId)
 
