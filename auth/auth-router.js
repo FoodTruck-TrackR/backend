@@ -71,7 +71,7 @@ router.post('/login', (req, res) => {
 
                     res.status(201).json({ data: user, token })
                 } else {
-                    res.status(404).json({ message: 'invalid credentials' })
+                    res.status(401).json({ message: 'invalid credentials' })
                 }
             })
             .catch(error => {
@@ -86,7 +86,7 @@ router.post('/login', (req, res) => {
 
                     res.status(201).json({ data: user, token })
                 } else {
-                    res.status(404).json({ message: 'invalid credentials' })
+                    res.status(401).json({ message: 'invalid credentials' })
                 }
             })
             .catch(error => {
