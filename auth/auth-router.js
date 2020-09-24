@@ -7,6 +7,7 @@ const { getAllUsers, getAllVendors, addUser, addVendor, findUser, findVendor, ge
 const { generateToken } = require('./token')
 const verifyToken = require('./authenticate-middleware')
 const { validateRegister, validateLogin } = require('../validation/validation-middleware')
+const validate = require('./validate-middleware') //validates that the use doesn't exist on either table
 
 //dev only
 router.get('/users', verifyToken(), (req, res) => {
@@ -29,7 +30,7 @@ router.get('/vendors', verifyToken(), (req, res) => {
         })
 })
 
-router.post('/register', (req, res) => {
+router.post('/register', validate(), (req, res) => {
 
     req.body.password = bcrypt.hashSync(req.body.password, 5)
 
