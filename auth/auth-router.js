@@ -29,11 +29,13 @@ router.get('/vendors', verifyToken(), (req, res) => {
         })
 })
 
-router.post('/register', validateRegister(), (req, res) => {
+router.post('/register', (req, res) => {
 
     req.body.password = bcrypt.hashSync(req.body.password, 5)
 
-    if (req.body.role === "diner") {
+    const role = req.body.role.toLowerCase()
+
+    if (role === "diner") {
         addUser(req.body)
             .then(([id]) => {
                 res.status(201).json({ message: 'User has been successfully registered' })
@@ -41,7 +43,7 @@ router.post('/register', validateRegister(), (req, res) => {
             .catch(error => {
                 res.status(500).json({ message: 'username or email alerady exists' })
             })
-    } else if (req.body.role === "vendor") {
+    } else if (role === "vendor") {
         addVendor(req.body)
             .then(([id]) => {
                 res.status(201).json({ message: 'User has been successfully registered' })
@@ -55,11 +57,12 @@ router.post('/register', validateRegister(), (req, res) => {
 
 })
 
-router.post('/login', validateLogin(), (req, res) => {
+router.post('/login', (req, res) => {
 
     const username = req.body.username
+    const role = req.body.role.toLowerCase()
 
-    if (req.body.role === "diner") {
+    if (role === "diner") {
         findUser(username)
             .then(user => {
                 if (user && bcrypt.compareSync(req.body.password, user.password)) {
