@@ -33,6 +33,6 @@
     "jest": "^26.4.2"
   },
   "jest": {
-    "testEnviornment": "node"
+    "testEnvironment": "node"
   }
 }

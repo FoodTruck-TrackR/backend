@@ -104,6 +104,7 @@ URL: https://bw-foodtruck-backend.herokuapp.com/auth/login
 |-----------------|--------------------|
 |username (required)           | string |
 |password (required)       | string   |
+|role (required)       | string ("vendor" or "diner")   |
 
 
 _An example of how the body should appear:_
